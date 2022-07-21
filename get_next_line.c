@@ -5,43 +5,80 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: rlouvrie <rlouvrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/21 20:21:57 by rlouvrie          #+#    #+#             */
-/*   Updated: 2022/07/21 21:09:30 by rlouvrie         ###   ########.fr       */
+/*   Created: 2022/07/21 21:37:33 by rlouvrie          #+#    #+#             */
+/*   Updated: 2022/07/22 00:31:55 by rlouvrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char	*get_next_line(int fd)
+char	*clear_stash(char *stash)
 {
-	static char		*stash;
-	char			*buf;
-	char			*line;
-	ssize_t			ret;
-	ssize_t			i;
+	char	*tmp;
+	int		i;
 
 	i = 0;
+	while (stash[i] && stash[i] != '\n')
+			i++;
+	if (stash[i] == '\n')
+		i++;
+	tmp = ft_substr(stash, (unsigned int)i, ft_strlen(stash) - i);
+	free(stash);
+	stash = tmp;
+	return (stash);
+}
+
+char	*stash_to_line(char *stash)
+{
+	char	*line;
+	int		i;
+
+	if (!stash || *stash == '\0')
+		return (NULL);
+	i = 0;
+	while (stash[i] && stash[i] != '\n')
+			i++;
+	if (stash[i] == '\n' || stash[i] == '\0')
+		line = ft_substr(stash, 0, i);
+	if (!line)
+		return (NULL);
+	return (line);
+}
+
+char	*read_and_stash(char *stash, int fd)
+{
+	char	*buf;
+	char	*tmp;
+	int		ret;
+
 	buf = malloc(sizeof(char) * (BUFFER_SIZE + 1));
+	if (!buf)
+		return (NULL);
 	ret = 1;
-	while (ret > 0 || *stash != 0)
+	while (!ft_strchr(stash, '\n') && ret > 0)
 	{
 		ret = read(fd, buf, BUFFER_SIZE);
 		buf[ret] = '\0';
-		stash = ft_strjoin(stash, buf);
-		if (ret == 0 && *stash == '\0')
-			return (free(buf), free(stash), NULL);
-		while (stash[i] && stash[i] != '\n')
-			i++;
-		if (stash[i] == '\n' || (stash[i] == '\0' && ret == 0))
-		{
-			line = malloc(sizeof(char) * (i + 2));
-			ft_strlcpy(line, stash, i + 1);
-			if (stash[i] == '\n')
-				line[i++] = '\n';
-			line[i] = '\0';
-			stash = ft_substr(stash, (unsigned int)i, ft_strlen(stash) - i);
-			return (free(buf), line);
-		}
+		tmp = ft_strjoin(stash, buf);
+		free(stash);
+		stash = tmp;
 	}
-	return (NULL);
+	return (free(buf), buf = NULL, stash);
+}
+
+char	*get_next_line(int fd)
+{
+	static char	*stash;
+	char		*line;
+
+	if (fd < 0 || BUFFER_SIZE <= 0)
+		return (NULL);
+	stash = read_and_stash(stash, fd);
+	if (!stash)
+		return (NULL);
+	line = stash_to_line(stash);
+	if (!line)
+		return (NULL);
+	stash = clear_stash(stash);
+	return (line);
 }

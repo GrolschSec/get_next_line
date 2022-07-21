@@ -6,11 +6,31 @@
 /*   By: rlouvrie <rlouvrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 20:22:20 by rlouvrie          #+#    #+#             */
-/*   Updated: 2022/07/21 21:08:58 by rlouvrie         ###   ########.fr       */
+/*   Updated: 2022/07/22 00:43:36 by rlouvrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+
+char	*ft_strchr(const char *s, int c)
+{
+	int		i;
+
+	if (!s)
+		return (NULL);
+	i = 0;
+	while (s[i])
+	{
+		if (s[i] == (unsigned char)c)
+		{
+			return ((char *)&s[i]);
+		}
+		i++;
+	}
+	if (c == '\0')
+		return ((char *)&s[i]);
+	return (NULL);
+}
 
 size_t	ft_strlen(const char *s)
 {
@@ -42,7 +62,7 @@ size_t	ft_strlcpy(char *dest, const char *src, size_t dstsize)
 }
 
 //M
-char	*ft_strjoin(char *s1, char const *s2)
+char	*ft_strjoin(const char *s1, char const *s2)
 {
 	size_t	length;
 	size_t	i;
@@ -63,7 +83,6 @@ char	*ft_strjoin(char *s1, char const *s2)
 		str[i++] = *s2++;
 	}
 	str[i] = '\0';
-	free(s1);
 	return (str);
 }
 
