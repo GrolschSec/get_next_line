@@ -6,7 +6,7 @@
 /*   By: rlouvrie <rlouvrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 21:37:33 by rlouvrie          #+#    #+#             */
-/*   Updated: 2022/07/22 00:31:55 by rlouvrie         ###   ########.fr       */
+/*   Updated: 2022/07/22 00:55:46 by rlouvrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ char	*clear_stash(char *stash)
 char	*stash_to_line(char *stash)
 {
 	char	*line;
+	char	*tmp;
 	int		i;
 
 	if (!stash || *stash == '\0')
@@ -39,7 +40,15 @@ char	*stash_to_line(char *stash)
 	while (stash[i] && stash[i] != '\n')
 			i++;
 	if (stash[i] == '\n' || stash[i] == '\0')
+	{
 		line = ft_substr(stash, 0, i);
+		if (stash[i] == '\n')
+		{
+			tmp = ft_strjoin(line, "\n");
+			free(line);
+			line = tmp;
+		}
+	}
 	if (!line)
 		return (NULL);
 	return (line);

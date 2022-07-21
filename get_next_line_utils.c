@@ -6,7 +6,7 @@
 /*   By: rlouvrie <rlouvrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 20:22:20 by rlouvrie          #+#    #+#             */
-/*   Updated: 2022/07/22 00:43:36 by rlouvrie         ###   ########.fr       */
+/*   Updated: 2022/07/22 00:45:26 by rlouvrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,23 +40,6 @@ size_t	ft_strlen(const char *s)
 		return (0);
 	i = 0;
 	while (s[i])
-		i++;
-	return (i);
-}
-
-size_t	ft_strlcpy(char *dest, const char *src, size_t dstsize)
-{
-	size_t	i;
-
-	i = 0;
-	while (dstsize != 0 && i < dstsize - 1 && src[i] != '\0')
-	{
-		dest[i] = src[i];
-		i++;
-	}
-	if (i < dstsize)
-		dest[i] = '\0';
-	while (src[i] != '\0')
 		i++;
 	return (i);
 }
