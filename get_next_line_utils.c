@@ -3,11 +3,96 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rlouvrie <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: rlouvrie <rlouvrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 20:22:20 by rlouvrie          #+#    #+#             */
-/*   Updated: 2022/07/21 20:22:22 by rlouvrie         ###   ########.fr       */
+/*   Updated: 2022/07/21 21:08:58 by rlouvrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+
+size_t	ft_strlen(const char *s)
+{
+	size_t	i;
+
+	if (!s)
+		return (0);
+	i = 0;
+	while (s[i])
+		i++;
+	return (i);
+}
+
+size_t	ft_strlcpy(char *dest, const char *src, size_t dstsize)
+{
+	size_t	i;
+
+	i = 0;
+	while (dstsize != 0 && i < dstsize - 1 && src[i] != '\0')
+	{
+		dest[i] = src[i];
+		i++;
+	}
+	if (i < dstsize)
+		dest[i] = '\0';
+	while (src[i] != '\0')
+		i++;
+	return (i);
+}
+
+//M
+char	*ft_strjoin(char *s1, char const *s2)
+{
+	size_t	length;
+	size_t	i;
+	char	*str;
+
+	i = 0;
+	length = ft_strlen(s1) + ft_strlen(s2);
+	str = malloc(sizeof(char) * (length + 1));
+	if (!str)
+		return (NULL);
+	while (s1 && s1[i])
+	{
+		str[i] = s1[i];
+		i++;
+	}
+	while (s2 && *s2)
+	{
+		str[i++] = *s2++;
+	}
+	str[i] = '\0';
+	free(s1);
+	return (str);
+}
+
+//M
+char	*ft_substr(char *s, unsigned int start, size_t len)
+{
+	char	*str;
+	size_t	i;
+	size_t	j;
+
+	if (start >= ft_strlen(s))
+	{
+		str = ((char *)malloc(sizeof(char) * 1));
+		str[0] = 0;
+		return (str);
+	}
+	if (len > ft_strlen(s) - start)
+		len = ft_strlen(s) - (size_t) start;
+	j = 0;
+	i = (size_t)start;
+	str = (char *)malloc(sizeof(char) * (len + 1));
+	if (!str)
+		return (NULL);
+	while (s[i] && len--)
+	{
+		str[j] = s[i];
+		i++;
+		j++;
+	}
+	str[j] = '\0';
+	return (str);
+}
