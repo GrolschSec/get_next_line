@@ -6,7 +6,7 @@
 /*   By: rlouvrie <rlouvrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 20:22:07 by rlouvrie          #+#    #+#             */
-/*   Updated: 2022/07/22 00:49:21 by rlouvrie         ###   ########.fr       */
+/*   Updated: 2022/07/22 00:59:19 by rlouvrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,5 +28,4 @@ char	*ft_strjoin(const char *s1, char const *s2);
 char	*ft_substr(char *s, unsigned int start, size_t len);
 char	*ft_strchr(const char *s, int c);
 size_t	ft_strlen(const char *s);
-size_t	ft_strlcpy(char *dest, const char *src, size_t dstsize);
 #endif

@@ -6,7 +6,7 @@
 /*   By: rlouvrie <rlouvrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 21:37:33 by rlouvrie          #+#    #+#             */
-/*   Updated: 2022/07/22 00:55:46 by rlouvrie         ###   ########.fr       */
+/*   Updated: 2022/07/22 01:53:35 by rlouvrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ char	*clear_stash(char *stash)
 	tmp = ft_substr(stash, (unsigned int)i, ft_strlen(stash) - i);
 	free(stash);
 	stash = tmp;
+	if (!stash[0])
+		return (free(stash), NULL);
 	return (stash);
 }
 
@@ -67,6 +69,8 @@ char	*read_and_stash(char *stash, int fd)
 	while (!ft_strchr(stash, '\n') && ret > 0)
 	{
 		ret = read(fd, buf, BUFFER_SIZE);
+		if (ret < 0)
+			return (free(buf), NULL);
 		buf[ret] = '\0';
 		tmp = ft_strjoin(stash, buf);
 		free(stash);
@@ -86,8 +90,6 @@ char	*get_next_line(int fd)
 	if (!stash)
 		return (NULL);
 	line = stash_to_line(stash);
-	if (!line)
-		return (NULL);
 	stash = clear_stash(stash);
 	return (line);
 }
