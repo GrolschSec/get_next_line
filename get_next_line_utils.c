@@ -6,7 +6,7 @@
 /*   By: rlouvrie <rlouvrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 20:22:20 by rlouvrie          #+#    #+#             */
-/*   Updated: 2022/07/22 00:45:26 by rlouvrie         ###   ########.fr       */
+/*   Updated: 2022/10/03 16:53:44 by rlouvrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,8 @@ char	*ft_substr(char *s, unsigned int start, size_t len)
 	if (start >= ft_strlen(s))
 	{
 		str = ((char *)malloc(sizeof(char) * 1));
+		if (!str)
+			return (NULL);
 		str[0] = 0;
 		return (str);
 	}
@@ -90,11 +92,7 @@ char	*ft_substr(char *s, unsigned int start, size_t len)
 	if (!str)
 		return (NULL);
 	while (s[i] && len--)
-	{
-		str[j] = s[i];
-		i++;
-		j++;
-	}
+		str[j++] = s[i++];
 	str[j] = '\0';
 	return (str);
 }
