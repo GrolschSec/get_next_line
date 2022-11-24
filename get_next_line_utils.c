@@ -68,6 +68,29 @@ char	*ft_strjoin(const char *s1, char const *s2)
 	str[i] = '\0';
 	return (str);
 }
+/*char	*ft_strjoin(char *s1, char *s2)
+{
+    char	*str;
+    size_t	size;
+    size_t    i;
+    size_t    j;
+
+    if (!s1 && !s2)
+        return (NULL);
+    size = ft_strlen(s1) + ft_strlen(s2);
+    str = malloc(sizeof(char) * (size + 1));
+    if (!str)
+        return (NULL);
+    i = 0;
+    j = 0;
+    while (s1 && s1[j])
+        str[i++] = s1[j++];
+    j = 0;
+    while (s2 && s2[j])
+        str[i++] = s2[j++];
+    str[i] = 0;
+    return (str);
+}*/
 
 //M
 char	*ft_substr(char *s, unsigned int start, size_t len)
