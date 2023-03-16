@@ -6,7 +6,7 @@
 /*   By: rlouvrie <rlouvrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 21:37:33 by rlouvrie          #+#    #+#             */
-/*   Updated: 2022/07/22 01:53:35 by rlouvrie         ###   ########.fr       */
+/*   Updated: 2023/03/16 15:07:12 by rlouvrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ char	*stash_to_line(char *stash)
 	i = 0;
 	while (stash[i] && stash[i] != '\n')
 			i++;
+	if (stash[i] == '\n' && stash[i + 1] == '\n')
+		return (NULL);
 	if (stash[i] == '\n' || stash[i] == '\0')
 	{
 		line = ft_substr(stash, 0, i);
@@ -90,6 +92,8 @@ char	*get_next_line(int fd)
 	if (!stash)
 		return (NULL);
 	line = stash_to_line(stash);
+	if (!line)
+		return (free(stash), NULL);
 	stash = clear_stash(stash);
 	return (line);
 }
